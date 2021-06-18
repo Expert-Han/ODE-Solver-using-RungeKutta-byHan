@@ -1,7 +1,9 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-# The system dynamics is given as that of the pdf file.
+# The system dynamics can be obtained by linearizing the magnetically suspended ball system.
+# please see the attached PDF file.
+
 def plant(x, u):
     dx[0] = x[1]
     dx[1] = 980 * x[0] - 2.8 * x[2]
