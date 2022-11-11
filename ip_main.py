@@ -1,13 +1,13 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-# The system dynamics can be obtained by linearizing the magnetically suspended ball system.
-# please see the attached PDF file.
+# The system dynamics can be obtained by linearizing the inverted pendulum system.
 
 def plant(x, u):
     dx[0] = x[1]
-    dx[1] = 980 * x[0] - 2.8 * x[2]
-    dx[2] = -100 * x[2] + 100 * u
+    dx[1] = (-m**2*(L/2)**2*np.sin(x[0])*np.cos(x[0])*x[1]**2+(M+m)*m*g*(L/2)*np.sin(x[0])+m*(L/2)*np.cos(x[0])*u)/((M+m)*(im+m*(L/2)**2)-m**2*(L/2)**2*np.cos(x[0])**2)
+    dx[2] = x[3]
+    dx[3] = (m**2*(L/2)**2*np.sin(x[0])*np.cos(x[0])*g-m*(im+m*(L/2)**2)*(L/2)*np.sin(x[0])*x(2)**2+(im+m*(L/2)**2)*u)/((M+m)*(im+m*(L/2)**2)-m**2*(L/2)**2*np.cos(x[0])**2)
     return dx
 
 def rk5(x, u, T):
@@ -17,15 +17,15 @@ def rk5(x, u, T):
     k4=plant(x+k3,u)*T
     dx = x + ((k1+k4)/6+(k2+k3)/3)
     return dx
-
-n = 3
-K = [[365.46613439, 21.77699344, 0.49931265]]
-x0 = np.array([0.1, -0.1, -0.1], dtype=np.float64)
+degree = 37
+n = 4
+K = [[-56.2839,-28.3492,2.5110,6.9588]]
+x0 = np.array([degree*np.pi/180, 0, 0, 0], dtype=np.float64)
 u0 = np.matmul(K,x0.T)
-dx = np.array([0,0,0], dtype=np.float64)
+dx = np.array([0,0,0,0], dtype=np.float64)
 
 T = 0.001
-tf = 1
+tf = 10
 sam = int(tf / T)
 tspan = np.linspace(0, tf, sam + 1)
 
@@ -45,8 +45,8 @@ u_sig = np.vstack((u_sig,u))
 
 plt.figure()
 plt.plot(tspan, x[:, 0], label="x1")
-plt.plot(tspan, x[:, 1], label="x2")
-plt.plot(tspan, x[:, 2], label="x3")
+#plt.plot(tspan, x[:, 1], label="x2")
+#plt.plot(tspan, x[:, 2], label="x3")
 plt.grid()
 plt.xlabel("Time")
 plt.ylabel("State response")
