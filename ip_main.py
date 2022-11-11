@@ -4,10 +4,15 @@ from matplotlib import pyplot as plt
 # The system dynamics can be obtained by linearizing the inverted pendulum system.
 
 def plant(x, u):
+    M = 0.5
+    m = 0.5
+    L = 1
+    g = 9.81
+    im = 0.5
     dx[0] = x[1]
     dx[1] = (-m**2*(L/2)**2*np.sin(x[0])*np.cos(x[0])*x[1]**2+(M+m)*m*g*(L/2)*np.sin(x[0])+m*(L/2)*np.cos(x[0])*u)/((M+m)*(im+m*(L/2)**2)-m**2*(L/2)**2*np.cos(x[0])**2)
     dx[2] = x[3]
-    dx[3] = (m**2*(L/2)**2*np.sin(x[0])*np.cos(x[0])*g-m*(im+m*(L/2)**2)*(L/2)*np.sin(x[0])*x(2)**2+(im+m*(L/2)**2)*u)/((M+m)*(im+m*(L/2)**2)-m**2*(L/2)**2*np.cos(x[0])**2)
+    dx[3] = (m**2*(L/2)**2*np.sin(x[0])*np.cos(x[0])*g-m*(im+m*(L/2)**2)*(L/2)*np.sin(x[0])*x[1]**2+(im+m*(L/2)**2)*u)/((M+m)*(im+m*(L/2)**2)-m**2*(L/2)**2*np.cos(x[0])**2)
     return dx
 
 def rk5(x, u, T):
